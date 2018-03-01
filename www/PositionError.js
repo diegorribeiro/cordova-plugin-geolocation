@@ -26,13 +26,15 @@
  * @param code
  * @param message
  */
-var PositionError = function (code, message) {
+var PositionError = function (code, message, status) {
     this.code = code || null;
     this.message = message || '';
+    this.status = status || '';
 };
 
 PositionError.prototype.PERMISSION_DENIED = PositionError.PERMISSION_DENIED = 1;
 PositionError.prototype.POSITION_UNAVAILABLE = PositionError.POSITION_UNAVAILABLE = 2;
 PositionError.prototype.TIMEOUT = PositionError.TIMEOUT = 3;
+PositionError.prototype.MOCK = PositionError.MOCK = 4;
 
 module.exports = PositionError;

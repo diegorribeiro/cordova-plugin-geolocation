@@ -61,7 +61,8 @@ function createTimeout (errorCallback, timeout) {
         t = null;
         errorCallback({
             code: PositionError.TIMEOUT,
-            message: 'Position retrieval timed out.'
+            message: 'Position retrieval timed out.',
+            status: 'TIME-OUT'
         });
     }, timeout);
     return t;
@@ -110,7 +111,7 @@ var geolocation = {
         var fail = function (e) {
             clearTimeout(timeoutTimer.timer);
             timeoutTimer.timer = null;
-            var err = new PositionError(e.code, e.message);
+            var err = new PositionError(e.code, e.message, e.status);
             if (errorCallback) {
                 errorCallback(err);
             }
@@ -124,7 +125,8 @@ var geolocation = {
         } else if (options.timeout === 0) {
             fail({
                 code: PositionError.TIMEOUT,
-                message: "timeout value in PositionOptions set to 0 and no cached Position object available, or cached Position object's age exceeds provided PositionOptions' maximumAge parameter."
+                message: "timeout value in PositionOptions set to 0 and no cached Position object available, or cached Position object's age exceeds provided PositionOptions' maximumAge parameter.",
+                status: 'TIME-OUT'
             });
         // Otherwise we have to call into native to retrieve a position.
         } else {
@@ -163,7 +165,7 @@ var geolocation = {
 
         var fail = function (e) {
             clearTimeout(timers[id].timer);
-            var err = new PositionError(e.code, e.message);
+            var err = new PositionError(e.code, e.message, e.status);
             if (errorCallback) {
                 errorCallback(err);
             }

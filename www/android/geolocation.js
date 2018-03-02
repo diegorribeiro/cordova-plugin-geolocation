@@ -35,7 +35,11 @@ module.exports = {
         };
         var fail = function () {
             if (error) {
-                error(new PositionError(PositionError.PERMISSION_DENIED, 'Illegal Access'));
+                if(error == 'mock-true'){
+                  error(new PositionError(PositionError.MOCK, 'Illegal Access - disable mock location', 'MOCK_DATA'));
+                }else{
+                  error(new PositionError(PositionError.PERMISSION_DENIED, 'Illegal Access', 'NO_DATA'));
+                }
             }
         };
         exec(win, fail, 'Geolocation', 'getPermission', []);
@@ -51,7 +55,7 @@ module.exports = {
 
         var fail = function () {
             if (error) {
-                error(new PositionError(PositionError.PERMISSION_DENIED, 'Illegal Access'));
+                error(new PositionError(PositionError.PERMISSION_DENIED, 'Illegal Access',''));
             }
         };
         exec(win, fail, 'Geolocation', 'getPermission', []);
